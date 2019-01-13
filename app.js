@@ -12,21 +12,20 @@ const searchUser = document.getElementById("searchUser");
 searchUser.addEventListener("keyup", (e) => {
         const userText = e.target.value;
 
-        if (!userText == "") {
+        if (userText !== "") {
 
             // Make HTTP call
             github.getUser(userText)
-            .then( data => {
-                if(data.profile.message === "Not Found") {
-                    profileData.innerHTML = "This user doesn't exist";
-                } else {
-                    ui.showProfile(data.profile);
-                }
-            } )
-        }
-        else {
+                .then(data => {
+                    if (data.profile.message === "Not Found") {
+                        ui.showAlert("This user not found", "alert alert-danger");
+                    } else {
+                        ui.showProfile(data.profile);
+                    }
+                })
+        } else {
             // Clear profile data on page
-
+            clearProfile();
         }
     }
 
